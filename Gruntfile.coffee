@@ -2,6 +2,7 @@ module.exports = (grunt) ->
 
   # Load required installed tasks.
   grunt.loadNpmTasks "grunt-contrib-clean"
+  grunt.loadNpmTasks "grunt-coffeelint"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
 
@@ -9,6 +10,11 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
     clean: [ "bin" ]
+    coffeelint:
+      files: [ "src/**/*.coffee" ]
+      options:
+        max_line_length:
+          level: "ignore"
     coffee:
       source:
         options:
@@ -23,10 +29,10 @@ module.exports = (grunt) ->
         livereload: true
       cwd: "src"
       files: [ "**/*.coffee" ]
-      tasks: [ "coffee" ]
+      tasks: [ "coffeelint", "coffee" ]
 
   # Register build task.
-  grunt.registerTask "build", [ "clean", "coffee" ]
+  grunt.registerTask "build", [ "clean", "coffeelint", "coffee" ]
 
   # Register watch task. This task does a build before watching.
   grunt.renameTask "watch", "delta"
