@@ -1,5 +1,10 @@
 module.exports = (grunt) ->
 
+  # Load required installed tasks.
+  grunt.loadNpmTasks "grunt-contrib-coffee"
+  grunt.loadNpmTasks "grunt-contrib-watch"
+
+  # Configure tasks.
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
     coffee:
@@ -11,14 +16,19 @@ module.exports = (grunt) ->
         src: [ "**/*.coffee" ]
         dest: "dist"
         ext: ".js"
-    watch:
+    delta:
       options:
         livereload: true
       cwd: "src"
       files: [ "**/*.coffee" ]
       tasks: [ "coffee" ]
 
-  grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-watch"
+  # Register build task.
+  grunt.registerTask "build", [ "coffee" ]
 
-  grunt.registerTask "default", [ "coffee", "watch" ]
+  # Register watch task. This task does a build before watching.
+  grunt.renameTask "watch", "delta"
+  grunt.registerTask "watch", [ "build", "delta" ]
+
+  # Register default task.
+  grunt.registerTask "default", [ "build" ]
