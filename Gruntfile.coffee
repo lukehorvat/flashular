@@ -16,7 +16,7 @@ module.exports = (grunt) ->
         max_line_length:
           level: "ignore"
     coffee:
-      source:
+      compile:
         options:
           bare: true
         expand: true
