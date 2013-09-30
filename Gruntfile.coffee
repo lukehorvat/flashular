@@ -1,12 +1,14 @@
 module.exports = (grunt) ->
 
   # Load required installed tasks.
+  grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
 
   # Configure tasks.
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
+    clean: [ "dist" ]
     coffee:
       source:
         options:
@@ -24,7 +26,7 @@ module.exports = (grunt) ->
       tasks: [ "coffee" ]
 
   # Register build task.
-  grunt.registerTask "build", [ "coffee" ]
+  grunt.registerTask "build", [ "clean", "coffee" ]
 
   # Register watch task. This task does a build before watching.
   grunt.renameTask "watch", "delta"
