@@ -8,7 +8,7 @@ module.exports = (grunt) ->
   # Configure tasks.
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
-    clean: [ "dist" ]
+    clean: [ "bin" ]
     coffee:
       source:
         options:
@@ -16,7 +16,7 @@ module.exports = (grunt) ->
         expand: true
         cwd: "src"
         src: [ "**/*.coffee" ]
-        dest: "dist"
+        dest: "bin"
         ext: ".js"
     delta:
       options:
