@@ -9,3 +9,12 @@ angular.module("flashular", [])
 
   (type, message, messageArgs...) ->
     flash = { type: type, message: message, messageArgs: messageArgs }
+
+.directive "flash", ->
+
+  restrict: "E"
+  template:"""
+    <div ng-show="flash">
+      {{flash.message}}
+    </div>
+    """

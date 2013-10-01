@@ -16,4 +16,9 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
       messageArgs: messageArgs
     };
   };
+}).directive("flash", function() {
+  return {
+    restrict: "E",
+    template: "<div ng-show=\"flash\">\n  {{flash.message}}\n</div>"
+  };
 });
