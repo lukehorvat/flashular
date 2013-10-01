@@ -1,7 +1,19 @@
-var hello;
+var __slice = [].slice;
 
-hello = function(message) {
-  return console.log(message);
-};
-
-hello("Hello World");
+angular.module("flashular", []).factory("flash", function($rootScope) {
+  var flash;
+  flash = null;
+  $rootScope.$on("$locationChangeStart", function() {
+    $rootScope.flash = angular.extend({}, flash);
+    return flash = null;
+  });
+  return function() {
+    var message, messageArgs, type;
+    type = arguments[0], message = arguments[1], messageArgs = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+    return flash = {
+      type: type,
+      message: message,
+      messageArgs: messageArgs
+    };
+  };
+});
