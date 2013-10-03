@@ -7,7 +7,7 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
     for (prop in currentFlash) {
       delete currentFlash[prop];
     }
-    currentFlash = angular.extend(currentFlash, nextFlash);
+    angular.extend(currentFlash, nextFlash);
     _results = [];
     for (prop in nextFlash) {
       _results.push(delete nextFlash[prop]);
@@ -20,6 +20,8 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
     }
     return currentFlash;
   };
+}).factory("f", function(flash) {
+  return flash;
 }).directive("flash", function(flash) {
   return {
     restrict: "E",

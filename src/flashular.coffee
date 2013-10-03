@@ -7,12 +7,15 @@ angular.module("flashular", [])
 
   $rootScope.$on "$locationChangeStart", ->
     delete currentFlash[prop] for prop of currentFlash
-    currentFlash = angular.extend currentFlash, nextFlash
+    angular.extend currentFlash, nextFlash
     delete nextFlash[prop] for prop of nextFlash
 
   (k, v) ->
     nextFlash[k] = v if k?
     currentFlash
+
+.factory "f", (flash) ->
+  flash
 
 .directive "flash", (flash) ->
 
