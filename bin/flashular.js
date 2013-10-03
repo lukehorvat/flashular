@@ -1,24 +1,33 @@
-var __slice = [].slice;
-
 angular.module("flashular", []).factory("flash", function($rootScope) {
-  var flash;
-  flash = null;
+  var currentFlash, nextFlash;
+  currentFlash = {};
+  nextFlash = {};
   $rootScope.$on("$locationChangeStart", function() {
-    $rootScope.flash = angular.extend({}, flash);
-    return flash = null;
+    var prop, _results;
+    for (prop in currentFlash) {
+      delete currentFlash[prop];
+    }
+    currentFlash = angular.extend(currentFlash, nextFlash);
+    _results = [];
+    for (prop in nextFlash) {
+      _results.push(delete nextFlash[prop]);
+    }
+    return _results;
   });
-  return function() {
-    var message, messageArgs, type;
-    type = arguments[0], message = arguments[1], messageArgs = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
-    return flash = {
-      type: type,
-      message: message,
-      messageArgs: messageArgs
-    };
+  return function(k, v) {
+    if (k != null) {
+      nextFlash[k] = v;
+    }
+    return currentFlash;
   };
-}).directive("flash", function() {
+}).directive("flash", function(flash) {
   return {
     restrict: "E",
-    template: "<div ng-show=\"flash\">\n  {{flash.message}}\n</div>"
+    replace: true,
+    scope: {},
+    template: "<div ng-show=\"flash\">\n  <div ng-show=\"flash.success\">{{flash.success}}</div>\n  <div ng-show=\"flash.error\">{{flash.error}}</div>\n  <div ng-show=\"flash.warning\">{{flash.warning}}</div>\n</div>",
+    link: function(scope) {
+      return scope.flash = flash();
+    }
   };
 });

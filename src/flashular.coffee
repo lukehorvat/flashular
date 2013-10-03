@@ -2,19 +2,29 @@ angular.module("flashular", [])
 
 .factory "flash", ($rootScope) ->
 
-  flash = null
+  currentFlash = {}
+  nextFlash = {}
+
   $rootScope.$on "$locationChangeStart", ->
-    $rootScope.flash = angular.extend {}, flash
-    flash = null
+    delete currentFlash[prop] for prop of currentFlash
+    currentFlash = angular.extend currentFlash, nextFlash
+    delete nextFlash[prop] for prop of nextFlash
 
-  (type, message, messageArgs...) ->
-    flash = { type: type, message: message, messageArgs: messageArgs }
+  (k, v) ->
+    nextFlash[k] = v if k?
+    currentFlash
 
-.directive "flash", ->
+.directive "flash", (flash) ->
 
   restrict: "E"
-  template:"""
+  replace: true
+  scope: {}
+  template: """
     <div ng-show="flash">
-      {{flash.message}}
+      <div ng-show="flash.success">{{flash.success}}</div>
+      <div ng-show="flash.error">{{flash.error}}</div>
+      <div ng-show="flash.warning">{{flash.warning}}</div>
     </div>
     """
+  link: (scope) ->
+    scope.flash = flash()
