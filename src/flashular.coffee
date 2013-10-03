@@ -17,13 +17,13 @@ angular.module("flashular", [])
 .factory "f", (flash) ->
   flash
 
-.directive "flash", (flash) ->
+.directive "flashAlerts", (flash) ->
 
   restrict: "E"
   replace: true
   scope: {}
   template: """
-    <div ng-show="flash" class="flash">
+    <div ng-show="flash" class="alerts">
       <div ng-show="flash.info" class="alert alert-info">
         <button type="button" class="close" ng-click="close('info')">&times;</button>
         {{flash.info}}
