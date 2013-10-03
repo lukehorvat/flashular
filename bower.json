@@ -5,7 +5,7 @@
   "authors": [
     "Luke Horvat <lukehorvat@gmail.com>"
   ],
-  "description": "A Rails-esque flash service for AngularJS.",
+  "description": "A Rails-inspired flash service for AngularJS.",
   "keywords": [
     "angular",
     "flash",

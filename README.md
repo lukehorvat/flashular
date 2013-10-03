@@ -1,4 +1,4 @@
 flashular
 =========
 
-A Rails-esque flash service for AngularJS.
+A Rails-inspired flash service for AngularJS.

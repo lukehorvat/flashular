@@ -1,7 +1,7 @@
 {
   "name": "flashular",
   "version": "0.0.0",
-  "description": "A Rails-esque flash service for AngularJS.",
+  "description": "A Rails-inspired flash service for AngularJS.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

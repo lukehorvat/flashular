@@ -22,7 +22,8 @@ angular.module("flashular", [])
   restrict: "E"
   replace: true
   scope: {}
-  template: """
+  template:
+    """
     <div ng-show="flash" class="alerts">
       <div ng-show="flash.info" class="alert alert-info">
         <button type="button" class="close" ng-click="close('info')">&times;</button>
