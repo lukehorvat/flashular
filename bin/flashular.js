@@ -22,7 +22,7 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
   };
 }).factory("f", function(flash) {
   return flash;
-}).directive("flashAlerts", function(flash) {
+}).directive("flashAlerts", function(flash, $interpolate) {
   return {
     restrict: "E",
     replace: true,
@@ -30,11 +30,16 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
       transform: "&"
     },
     template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-show=\"flash.info\" class=\"alert alert-info\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('info')\">&times;</button>\n    {{transform({alert: flash.info})}}\n  </div>\n  <div ng-show=\"flash.success\" class=\"alert alert-success\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('success')\">&times;</button>\n    {{transform({alert: flash.success})}}\n  </div>\n  <div ng-show=\"flash.warning\" class=\"alert alert-warning\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('warning')\">&times;</button>\n    {{transform({alert: flash.warning})}}\n  </div>\n  <div ng-show=\"flash.error\" class=\"alert alert-error\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('error')\">&times;</button>\n    {{transform({alert: flash.error})}}\n  </div>\n</div>",
-    link: function(scope) {
+    link: function(scope, iElement, iAttrs) {
       scope.flash = flash();
-      return scope.close = function(key) {
+      scope.close = function(key) {
         return delete scope.flash[key];
       };
+      if (iAttrs.transform == null) {
+        return scope.transform = function(alert) {
+          return $interpolate("{{alert}}")(alert);
+        };
+      }
     }
   };
 });

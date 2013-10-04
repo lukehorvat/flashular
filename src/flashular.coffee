@@ -17,7 +17,7 @@ angular.module("flashular", [])
 .factory "f", (flash) ->
   flash
 
-.directive "flashAlerts", (flash) ->
+.directive "flashAlerts", (flash, $interpolate) ->
 
   restrict: "E"
   replace: true
@@ -44,6 +44,9 @@ angular.module("flashular", [])
       </div>
     </div>
     """
-  link: (scope) ->
+  link: (scope, iElement, iAttrs) ->
     scope.flash = flash()
     scope.close = (key) -> delete scope.flash[key]
+    if not iAttrs.transform?
+      # Define a default transform function that just returns the passed-in value.
+      scope.transform = (alert) -> $interpolate("{{alert}}")(alert)
