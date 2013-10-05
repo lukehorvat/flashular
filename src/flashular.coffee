@@ -14,9 +14,6 @@ angular.module("flashular", [])
     nextFlash[k] = v if k?
     currentFlash
 
-.factory "f", (flash) ->
-  flash
-
 .directive "flashAlerts", (flash, $interpolate) ->
 
   restrict: "E"

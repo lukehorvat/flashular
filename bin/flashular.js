@@ -20,8 +20,6 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
     }
     return currentFlash;
   };
-}).factory("f", function(flash) {
-  return flash;
 }).directive("flashAlerts", function(flash, $interpolate) {
   return {
     restrict: "E",
