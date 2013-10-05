@@ -25,19 +25,19 @@ angular.module("flashular", [])
     <div ng-show="flash" class="alerts">
       <div ng-show="flash.info" class="alert alert-info">
         <button type="button" class="close" ng-click="close('info')">&times;</button>
-        {{transform({alert: flash.info})}}
+        {{flash.info ? transform({alert: flash.info}) : ""}}
       </div>
       <div ng-show="flash.success" class="alert alert-success">
         <button type="button" class="close" ng-click="close('success')">&times;</button>
-        {{transform({alert: flash.success})}}
+        {{flash.success ? transform({alert: flash.success}) : ""}}
       </div>
       <div ng-show="flash.warning" class="alert alert-warning">
         <button type="button" class="close" ng-click="close('warning')">&times;</button>
-        {{transform({alert: flash.warning})}}
+        {{flash.warning ? transform({alert: flash.warning}) : ""}}
       </div>
       <div ng-show="flash.error" class="alert alert-error">
         <button type="button" class="close" ng-click="close('error')">&times;</button>
-        {{transform({alert: flash.error})}}
+        {{flash.error ? transform({alert: flash.error}) : ""}}
       </div>
     </div>
     """
