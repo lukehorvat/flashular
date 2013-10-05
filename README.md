@@ -87,6 +87,14 @@ $rootScope.processFlashAlert = (alert) ->
 
 All contributions are welcome.
 
-As you've probably noticed, Flashular development has been set up to take advantage of [Bower](https://github.com/bower/bower) and [Grunt](https://github.com/gruntjs/grunt). Perhaps a tad overkill for a project of this size, but then again you don't *have* to use them. If you do, just run `npm install` and `bower install` to get your dependencies sorted out.
+As you've probably noticed, Flashular development has been set up to take advantage of [Bower](https://github.com/bower/bower) and [Grunt](https://github.com/gruntjs/grunt). So if you're into that sort of thing, just run `npm install` and `bower install` to get your dependencies sorted out.
 
 Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js). Run the `grunt watch` task to auto-compile CoffeeScript to JavaScript as you work.
+
+### Development Roadmap
+
+Some things to look at doing:
+- A small sample/demo application.
+- Specs.
+- Replicate more functionality of the Rails flash.
+- Make the flashAlerts directive more compatible with other front-end frameworks e.g. Foundation.
