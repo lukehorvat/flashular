@@ -23,27 +23,16 @@ angular.module("flashular", [])
   template:
     """
     <div ng-show="flash" class="alerts">
-      <div ng-show="flash.info" class="alert alert-info">
-        <button type="button" class="close" ng-click="close('info')">&times;</button>
-        {{flash.info ? transform({alert: flash.info}) : ""}}
-      </div>
-      <div ng-show="flash.success" class="alert alert-success">
-        <button type="button" class="close" ng-click="close('success')">&times;</button>
-        {{flash.success ? transform({alert: flash.success}) : ""}}
-      </div>
-      <div ng-show="flash.warning" class="alert alert-warning">
-        <button type="button" class="close" ng-click="close('warning')">&times;</button>
-        {{flash.warning ? transform({alert: flash.warning}) : ""}}
-      </div>
-      <div ng-show="flash.error" class="alert alert-error">
-        <button type="button" class="close" ng-click="close('error')">&times;</button>
-        {{flash.error ? transform({alert: flash.error}) : ""}}
+      <div ng-repeat="alertType in alertTypes" ng-show="flash[alertType]" class="alert alert-{{alertType}}">
+        <button type="button" class="close" ng-click="close(alertType)">&times;</button>
+        {{flash[alertType] ? transform({alert: flash[alertType]}) : ""}}
       </div>
     </div>
     """
   link: (scope, iElement, iAttrs) ->
+    scope.alertTypes = ["info", "success", "error", "warning"]
     scope.flash = flash()
-    scope.close = (key) -> delete scope.flash[key]
+    scope.close = (alertType) -> delete scope.flash[alertType]
     if not iAttrs.transform?
       # Define a default transform function that just returns the passed-in value.
       scope.transform = (alert) -> $interpolate("{{alert}}")(alert)

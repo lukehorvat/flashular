@@ -27,11 +27,12 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
     scope: {
       transform: "&"
     },
-    template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-show=\"flash.info\" class=\"alert alert-info\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('info')\">&times;</button>\n    {{flash.info ? transform({alert: flash.info}) : \"\"}}\n  </div>\n  <div ng-show=\"flash.success\" class=\"alert alert-success\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('success')\">&times;</button>\n    {{flash.success ? transform({alert: flash.success}) : \"\"}}\n  </div>\n  <div ng-show=\"flash.warning\" class=\"alert alert-warning\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('warning')\">&times;</button>\n    {{flash.warning ? transform({alert: flash.warning}) : \"\"}}\n  </div>\n  <div ng-show=\"flash.error\" class=\"alert alert-error\">\n    <button type=\"button\" class=\"close\" ng-click=\"close('error')\">&times;</button>\n    {{flash.error ? transform({alert: flash.error}) : \"\"}}\n  </div>\n</div>",
+    template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash[alertType]\" class=\"alert alert-{{alertType}}\">\n    <button type=\"button\" class=\"close\" ng-click=\"close(alertType)\">&times;</button>\n    {{flash[alertType] ? transform({alert: flash[alertType]}) : \"\"}}\n  </div>\n</div>",
     link: function(scope, iElement, iAttrs) {
+      scope.alertTypes = ["info", "success", "error", "warning"];
       scope.flash = flash();
-      scope.close = function(key) {
-        return delete scope.flash[key];
+      scope.close = function(alertType) {
+        return delete scope.flash[alertType];
       };
       if (iAttrs.transform == null) {
         return scope.transform = function(alert) {
