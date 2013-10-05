@@ -5,6 +5,18 @@ A simple flash service for AngularJS that provides a means with which to pass te
 
 ## Installation
 
+You can manually add the [flashular.js](/bin/flashular.js) file to your AngularJS application, or install it with Bower:
+
+```bash
+$ bower install flashular --save-dev
+```
+
+After that, just add Flashular to any Angular module's dependency list:
+
+```coffeescript
+angular.module("app", ["flashular"])
+```
+
 ## Service
 
 ## Directive
