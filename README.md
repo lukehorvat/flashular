@@ -66,12 +66,12 @@ Still not clear? Below is an example:
 
 ```coffeescript
 # Define a translation in your i18n dictionary.
-{"key": "SIGN_IN_MESSAGE", "value": "You signed in successfully. Welcome back, %s!"}
+{"key": "SIGN_IN_SUCCESS", "value": "You signed in successfully. Welcome back, %s!"}
 ```
 
 ```coffeescript
 # Store the i18n dictionary key in the flash along with any strings to substitute.
-flash("success", [ "SIGN_IN_MESSAGE", username ])
+flash("success", ["SIGN_IN_SUCCESS", username])
 ```
 
 ```coffeescript
@@ -80,3 +80,5 @@ $rootScope.processFlashAlert = (alert) ->
   [message, args...] = alert
   stringUtils.format(i18n.translate(message), args...)
 ```
+
+![Alert](http://i.imgur.com/DGZ7sgg.png)
