@@ -19,4 +19,27 @@ angular.module("app", ["flashular"])
 
 ## Service
 
+Flashular provides a **flash** service that allows you to temporarily store values of *any* type (e.g. strings, arrays, objects, etc.), and retrieve them when the [$location](http://docs.angularjs.org/api/ng.$location) changes. Values are only stored in the flash for a maximum of one $location change before being cleared out.
+
+To use the flash service, simply inject it as a dependency in your Angular controller:
+
+```coffeescript
+.controller "SignInCtrl", (flash) ->
+```
+
+The injected flash service is a function that can be called to **set** values for the *next* $location or **get** values intended for the *current* $location (i.e. stuff stored in the flash during the previous $location).
+
+To store a value for the next $location, call the function with a key and value pair:
+
+```coffeescript
+flash("user", { firstName: "John", lastName: "Smith", age: 30 })
+```
+
+To retrieve a value for the current $location, call the function without specifying any arguments. This will return a flash object that you can query however you want:
+
+```coffeescript
+f = flash()
+user = f["user"]
+```
+
 ## Directive
