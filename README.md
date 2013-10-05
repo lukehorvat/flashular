@@ -58,9 +58,9 @@ Adding the flashAlerts directive to a template can be done like so:
 <flash-alerts pre-process="processFlashAlert(alert)"></flash-alerts>
 ```
 
-How might this be useful? Well, flash alerts are definitely something you want to localize, but a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. What if you want to store an alert in the flash, but i18n hasn't finished loading yet. How do you do it?
+How might this be useful? Well, flash alerts are definitely something you want to localize, for example. But a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. So what if you want to store a translated alert string in the flash, but i18n hasn't finished loading yet. You can't do it. Or can you?
 
-With Flashular, you could simply store the dictionary key for a particular translation in the flash, and then translate it later in your `preProcess` function. And because *any* type can be stored in the flash, you could store the dictionary key in an array along with additional strings to substitute in the translation.
+Flashular automatically detects changes to the return value of your `preProcess` function (using Angular's [$interpolate](http://docs.angularjs.org/api/ng.$interpolate) magic) and re-renders alerts as needed. So if your i18n library returns null or an empty string if you try to use it before it has finished loading, and a translated string once it has loaded, then it's pretty obvious what you should do - perform the translation inside your `preProcess` function!
 
 Still not clear? Below is an example:
 
@@ -70,12 +70,12 @@ Still not clear? Below is an example:
 ```
 
 ```coffeescript
-# Store the i18n dictionary key in the flash along with strings to substitute.
+# Store the i18n dictionary key in the flash along with any strings to substitute.
 flash("success", [ "SIGN_IN_MESSAGE", username ])
 ```
 
 ```coffeescript
-# Process the alert before rendering it.
+# Perform translations and string substituting in the preProcess function.
 $rootScope.processFlashAlert = (alert) ->
   [message, args...] = alert
   stringUtils.format(i18n.translate(message), args...)
