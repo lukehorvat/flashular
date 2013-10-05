@@ -32,14 +32,14 @@ The injected flash service is a function that can be called to **set** values fo
 To store a value for the next $location, call the function with a key and value pair:
 
 ```coffeescript
-flash("user", { firstName: "John", lastName: "Smith", age: 30 })
+flash("username", "John Smith")
 ```
 
 To retrieve a value for the current $location, call the function without specifying any arguments. This will return a flash object that you can query however you want:
 
 ```coffeescript
 f = flash()
-user = f["user"]
+username = f["username"]
 ```
 
 ## Directive
@@ -50,4 +50,33 @@ Adding the flashAlerts directive to a template can be done like so:
 
 ```
 <flash-alerts></flash-alerts>
+```
+
+**Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should be a function that accepts a single argument (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
+
+```
+<flash-alerts pre-process="processFlashAlert(alert)"></flash-alerts>
+```
+
+How might this be useful? Well, flash alerts are definitely something you want to localize, but a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. What if you want to store an alert in the flash, but i18n hasn't finished loading yet. How do you do it?
+
+With Flashular, you could simply store the dictionary key for a particular translation in the flash, and then translate it later in your `preProcess` function. And because *any* type can be stored in the flash, you could store the dictionary key in an array along with additional strings to substitute in the translation.
+
+Still not clear? Below is an example:
+
+```coffeescript
+# Define a translation in your i18n dictionary.
+{"key": "SIGN_IN_MESSAGE", "value": "You signed in successfully. Welcome back, %s!"}
+```
+
+```coffeescript
+# Store the i18n dictionary key in the flash along with strings to substitute.
+flash("success", [ "SIGN_IN_MESSAGE", username ])
+```
+
+```coffeescript
+# Process the alert before rendering it.
+$rootScope.processFlashAlert = (alert) ->
+  [message, args...] = alert
+  stringUtils.format(i18n.translate(message), args...)
 ```
