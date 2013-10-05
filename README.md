@@ -58,7 +58,7 @@ Adding the flashAlerts directive to a template can be done like so:
 <flash-alerts pre-process="processFlashAlert(alert)"></flash-alerts>
 ```
 
-How might this be useful? Well, flash alerts are definitely something you want to localize, for example. But a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. So what if you want to store a translated alert string in the flash, but i18n hasn't finished loading yet. You can't do it. Or can you?
+How might this be useful? Well, flash alerts are definitely something you want to localize, for example. But a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. So what if you want to store a translated alert string in the flash, but i18n hasn't finished loading yet? You can't do it. Or can you?
 
 Flashular automatically detects changes to the return value of your `preProcess` function (using [$interpolate](http://docs.angularjs.org/api/ng.$interpolate) magic) and re-renders alerts as needed. So if your i18n library returns null or an empty string if you try to use it before it has finished loading, and a translated string once it has loaded, then it's pretty obvious what you should do - perform the translation inside your `preProcess` function!
 
