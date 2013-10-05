@@ -60,7 +60,7 @@ Adding the flashAlerts directive to a template can be done like so:
 
 How might this be useful? Well, flash alerts are definitely something you want to localize, for example. But a lot of i18n libraries out there tend to load their translation dictionaries asynchronously. So what if you want to store a translated alert string in the flash, but i18n hasn't finished loading yet. You can't do it. Or can you?
 
-Flashular automatically detects changes to the return value of your `preProcess` function (using Angular's [$interpolate](http://docs.angularjs.org/api/ng.$interpolate) magic) and re-renders alerts as needed. So if your i18n library returns null or an empty string if you try to use it before it has finished loading, and a translated string once it has loaded, then it's pretty obvious what you should do - perform the translation inside your `preProcess` function!
+Flashular automatically detects changes to the return value of your `preProcess` function (using [$interpolate](http://docs.angularjs.org/api/ng.$interpolate) magic) and re-renders alerts as needed. So if your i18n library returns null or an empty string if you try to use it before it has finished loading, and a translated string once it has loaded, then it's pretty obvious what you should do - perform the translation inside your `preProcess` function!
 
 Still not clear? Below is an example:
 
@@ -81,4 +81,12 @@ $rootScope.processFlashAlert = (alert) ->
   stringUtils.format(i18n.translate(message), args...)
 ```
 
-![Alert](http://i.imgur.com/DGZ7sgg.png)
+![Alert example](http://i.imgur.com/DGZ7sgg.png)
+
+## Contributing
+
+All contributions are welcome.
+
+As you've probably noticed, Flashular development has been set up to take advantage of [Bower](https://github.com/bower/bower) and [Grunt](https://github.com/gruntjs/grunt). Perhaps a tad overkill for a project of this size, but then again you don't *have* to use them. If you do, just run `npm install` and `bower install` to get your dependencies sorted out.
+
+Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js). Run the `grunt watch` task to auto-compile CoffeeScript to JavaScript as you work.
