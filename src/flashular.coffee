@@ -5,7 +5,7 @@ angular.module("flashular", [])
   currentFlash = {}
   nextFlash = {}
 
-  $rootScope.$on "$locationChangeStart", ->
+  $rootScope.$on "$locationChangeSuccess", ->
     delete currentFlash[prop] for prop of currentFlash
     angular.extend currentFlash, nextFlash
     delete nextFlash[prop] for prop of nextFlash

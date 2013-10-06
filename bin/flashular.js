@@ -2,7 +2,7 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
   var currentFlash, nextFlash;
   currentFlash = {};
   nextFlash = {};
-  $rootScope.$on("$locationChangeStart", function() {
+  $rootScope.$on("$locationChangeSuccess", function() {
     var prop, _results;
     for (prop in currentFlash) {
       delete currentFlash[prop];
