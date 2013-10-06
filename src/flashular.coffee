@@ -10,7 +10,11 @@ angular.module("flashular", [])
     angular.extend currentFlash, nextFlash
     delete nextFlash[prop] for prop of nextFlash
 
-  (k, v) -> if k? then nextFlash[k] = v else currentFlash
+  (k, v) ->
+    if k?
+      if v? then nextFlash[k] = v else nextFlash[k]
+    else
+      currentFlash
 
 .directive "flashAlerts", (flash, $interpolate) ->
 

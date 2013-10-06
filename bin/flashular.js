@@ -16,7 +16,11 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
   });
   return function(k, v) {
     if (k != null) {
-      return nextFlash[k] = v;
+      if (v != null) {
+        return nextFlash[k] = v;
+      } else {
+        return nextFlash[k];
+      }
     } else {
       return currentFlash;
     }
