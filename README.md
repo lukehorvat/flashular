@@ -52,7 +52,7 @@ Adding the flashAlerts directive to a template can be done like so:
 <flash-alerts></flash-alerts>
 ```
 
-**Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should be a function that accepts a single argument (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
+**Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should specify a function with a single parameter (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
 
 ```
 <flash-alerts pre-process="processFlashAlert(alert)"></flash-alerts>
