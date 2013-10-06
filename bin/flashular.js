@@ -16,9 +16,10 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
   });
   return function(k, v) {
     if (k != null) {
-      nextFlash[k] = v;
+      return nextFlash[k] = v;
+    } else {
+      return currentFlash;
     }
-    return currentFlash;
   };
 }).directive("flashAlerts", function(flash, $interpolate) {
   return {
@@ -29,8 +30,8 @@ angular.module("flashular", []).factory("flash", function($rootScope) {
     },
     template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash[alertType]\" class=\"alert alert-{{alertType}}\">\n    <button type=\"button\" class=\"close\" ng-click=\"close(alertType)\">&times;</button>\n    {{flash[alertType] ? preProcess({alert: flash[alertType]}) : \"\"}}\n  </div>\n</div>",
     link: function(scope, iElement, iAttrs) {
-      scope.alertTypes = ["info", "success", "error", "warning"];
       scope.flash = flash();
+      scope.alertTypes = ["info", "success", "error", "warning"];
       scope.close = function(alertType) {
         return delete scope.flash[alertType];
       };

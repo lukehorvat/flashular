@@ -27,7 +27,7 @@ To use the flash service, simply inject it as a dependency in your Angular contr
 .controller "SignInCtrl", (flash) ->
 ```
 
-The injected flash service is a function that can be called to **set** values for the *next* $location or **get** values intended for the *current* $location (i.e. stuff stored in the flash during the previous $location).
+The injected flash service is a multi-purpose function that can be called to get/set values in the flash for both the *current* $location and the *next* $location.
 
 To store a value for the next $location, call the function with a key and value pair:
 
@@ -35,10 +35,17 @@ To store a value for the next $location, call the function with a key and value 
 flash("username", "John Smith")
 ```
 
-To retrieve a value for the current $location, call the function without specifying any arguments. This will return a flash object that you can query however you want:
+To get a value intended for the next $location, call the function with the value omitted:
+
+```coffeescript
+flash("username")
+```
+
+To get/set values in the flash for the current $location, call the function without specifying any arguments. This will return a flash object that you can query however you want:
 
 ```coffeescript
 f = flash()
+valueCount = f.length
 username = f["username"]
 ```
 
@@ -52,7 +59,7 @@ Adding the flashAlerts directive to a template can be done like so:
 <flash-alerts></flash-alerts>
 ```
 
-**Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should specify a function with a single parameter (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
+**Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should specify a function that has a single parameter (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
 
 ```
 <flash-alerts pre-process="processFlashAlert(alert)"></flash-alerts>

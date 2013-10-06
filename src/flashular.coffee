@@ -10,9 +10,7 @@ angular.module("flashular", [])
     angular.extend currentFlash, nextFlash
     delete nextFlash[prop] for prop of nextFlash
 
-  (k, v) ->
-    nextFlash[k] = v if k?
-    currentFlash
+  (k, v) -> if k? then nextFlash[k] = v else currentFlash
 
 .directive "flashAlerts", (flash, $interpolate) ->
 
@@ -30,8 +28,8 @@ angular.module("flashular", [])
     </div>
     """
   link: (scope, iElement, iAttrs) ->
-    scope.alertTypes = ["info", "success", "error", "warning"]
     scope.flash = flash()
+    scope.alertTypes = ["info", "success", "error", "warning"]
     scope.close = (alertType) -> delete scope.flash[alertType]
     if not iAttrs.preProcess?
       # Define a default preProcess function that does no processing of the alert.
