@@ -4,8 +4,18 @@ angular.module("flashular", [])
 
   currentFlash = {}
   nextFlash = {}
+  isModuleLoaded = (name) ->
+    try angular.module(name)? catch e then false
 
-  $rootScope.$on "$locationChangeSuccess", ->
+  # Determine which event to listen for based on the installed router.
+  if isModuleLoaded "ngRoute"
+    eventName = "$routeChangeSuccess"
+  else if isModuleLoaded "ui.router"
+    eventName = "$stateChangeSuccess"
+  else
+    eventName = "$locationChangeSuccess"
+
+  $rootScope.$on eventName, ->
     delete currentFlash[prop] for prop of currentFlash
     angular.extend currentFlash, nextFlash
     delete nextFlash[prop] for prop of nextFlash

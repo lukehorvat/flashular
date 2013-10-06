@@ -1,10 +1,26 @@
 angular.module('flashular', []).factory('flash', [
   '$rootScope',
   function ($rootScope) {
-    var currentFlash, nextFlash;
+    var currentFlash, eventName, isModuleLoaded, nextFlash;
     currentFlash = {};
     nextFlash = {};
-    $rootScope.$on('$locationChangeSuccess', function () {
+    isModuleLoaded = function (name) {
+      var e;
+      try {
+        return angular.module(name) != null;
+      } catch (_error) {
+        e = _error;
+        return false;
+      }
+    };
+    if (isModuleLoaded('ngRoute')) {
+      eventName = '$routeChangeSuccess';
+    } else if (isModuleLoaded('ui.router')) {
+      eventName = '$stateChangeSuccess';
+    } else {
+      eventName = '$locationChangeSuccess';
+    }
+    $rootScope.$on(eventName, function () {
       var prop, _results;
       for (prop in currentFlash) {
         delete currentFlash[prop];
