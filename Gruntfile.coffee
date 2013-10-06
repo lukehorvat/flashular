@@ -4,6 +4,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-coffeelint"
   grunt.loadNpmTasks "grunt-contrib-coffee"
+  grunt.loadNpmTasks "grunt-ngmin"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-watch"
 
@@ -17,16 +18,22 @@ module.exports = (grunt) ->
         max_line_length:
           level: "ignore"
     coffee:
-      compile:
+      build:
         options:
           bare: true
         expand: true
-        cwd: "src"
         src: [ "<%= pkg.name %>.coffee" ]
+        cwd: "src"
         dest: "bin"
         ext: ".js"
+    ngmin:
+      files:
+        src: [ "<%= pkg.name %>.js" ]
+        cwd: "bin"
+        dest: "bin"
+        expand: true
     uglify:
-      compile:
+      build:
         files:
           "bin/<%= pkg.name %>.min.js": "bin/<%= pkg.name %>.js"
     delta:
@@ -37,7 +44,7 @@ module.exports = (grunt) ->
       tasks: [ "coffeelint", "coffee" ]
 
   # Register build task.
-  grunt.registerTask "build", [ "clean", "coffeelint", "coffee", "uglify" ]
+  grunt.registerTask "build", [ "clean", "coffeelint", "coffee", "ngmin", "uglify" ]
 
   # Register watch task. This task does a build before watching.
   grunt.renameTask "watch", "delta"

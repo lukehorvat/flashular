@@ -8,7 +8,7 @@ A simple flash service for AngularJS that provides you with the means to pass te
 You can manually add the [flashular.js](/bin/flashular.js) file to your AngularJS application, or install it with Bower:
 
 ```bash
-$ bower install flashular --save-dev
+$ bower install flashular
 ```
 
 After that, just add Flashular to any Angular module's dependency list:
@@ -96,7 +96,7 @@ All contributions are welcome.
 
 As you've probably noticed, Flashular development has been set up to take advantage of [Bower](https://github.com/bower/bower) and [Grunt](https://github.com/gruntjs/grunt). So if you're into that sort of thing, just run `npm install` and `bower install` to get your dependencies sorted out.
 
-Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js). Run the `grunt watch` task to auto-compile CoffeeScript to JavaScript as you work.
+Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js) and [flashular.min.js](/bin/flashular.min.js). Run the `grunt watch` task to auto-compile/lint/minify/etc. while you work.
 
 ### Development Roadmap
 
