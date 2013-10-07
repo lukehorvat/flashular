@@ -14,7 +14,7 @@ var __hasProp = {}.hasOwnProperty, __extends = function (child, parent) {
 angular.module('flashular', []).factory('flash', [
   '$rootScope',
   function ($rootScope) {
-    var Flash, NextFlash, currentFlash, eventName, isModuleLoaded, nextFlash;
+    var Flash, NextFlash, eventName, flash, isModuleLoaded;
     Flash = function () {
       function Flash() {
         this.data = {};
@@ -43,19 +43,18 @@ angular.module('flashular', []).factory('flash', [
     }();
     NextFlash = function (_super) {
       __extends(NextFlash, _super);
-      function NextFlash(now) {
+      function NextFlash() {
         NextFlash.__super__.constructor.apply(this, arguments);
-        this.now = now;
+        this.now = new Flash();
       }
-      NextFlash.prototype.transition = function (flash) {
+      NextFlash.prototype.transition = function () {
         this.now.clear();
         angular.extend(this.now.data, this.data);
         return this.clear();
       };
       return NextFlash;
     }(Flash);
-    currentFlash = new Flash();
-    nextFlash = new NextFlash(currentFlash);
+    flash = new NextFlash();
     isModuleLoaded = function (name) {
       var e;
       try {
@@ -73,9 +72,9 @@ angular.module('flashular', []).factory('flash', [
       eventName = '$locationChangeSuccess';
     }
     $rootScope.$on(eventName, function () {
-      return nextFlash.transition();
+      return flash.transition();
     });
-    return nextFlash;
+    return flash;
   }
 ]).directive('flashAlerts', [
   'flash',

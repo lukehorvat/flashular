@@ -12,22 +12,20 @@ angular.module("flashular", [])
     clear: -> @remove(k) for k of @data
 
   class NextFlash extends Flash
-    constructor: (now) ->
+    constructor: ->
       super
-      @now = now
-    transition: (flash) ->
+      @now = new Flash
+    transition: ->
       @now.clear()
       angular.extend @now.data, @data
       @clear()
 
-  currentFlash = new Flash
-  nextFlash = new NextFlash(currentFlash)
+  flash = new NextFlash
 
-  # Every route change, make the "next" flash become the "now" flash.
+  # Determine which event to listen for based on the installed router.
   isModuleLoaded = (name) ->
     try angular.module(name)? catch e then false
 
-  # Determine which event to listen for based on the installed router.
   if isModuleLoaded "ngRoute"
     eventName = "$routeChangeSuccess"
   else if isModuleLoaded "ui.router"
@@ -35,9 +33,10 @@ angular.module("flashular", [])
   else
     eventName = "$locationChangeSuccess"
 
-  $rootScope.$on eventName, -> nextFlash.transition()
+  # Every route change, make the "next" flash become the "now" flash.
+  $rootScope.$on eventName, -> flash.transition()
 
-  return nextFlash
+  return flash
 
 .directive "flashAlerts", (flash, $interpolate) ->
 
