@@ -1,20 +1,7 @@
-var __hasProp = {}.hasOwnProperty, __extends = function (child, parent) {
-    for (var key in parent) {
-      if (__hasProp.call(parent, key))
-        child[key] = parent[key];
-    }
-    function ctor() {
-      this.constructor = child;
-    }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor();
-    child.__super__ = parent.prototype;
-    return child;
-  };
 angular.module('flashular', []).factory('flash', [
   '$rootScope',
   function ($rootScope) {
-    var Flash, NextFlash, eventName, flash, isModuleLoaded;
+    var Flash, eventName, flash, isModuleLoaded;
     Flash = function () {
       function Flash() {
         this.data = {};
@@ -39,17 +26,11 @@ angular.module('flashular', []).factory('flash', [
         }
         return _results;
       };
+      Flash.prototype.isEmpty = function () {
+        return this.data.length <= 0;
+      };
       return Flash;
     }();
-    NextFlash = function (_super) {
-      __extends(NextFlash, _super);
-      function NextFlash() {
-        NextFlash.__super__.constructor.apply(this, arguments);
-        this.now = new Flash();
-      }
-      return NextFlash;
-    }(Flash);
-    flash = new NextFlash();
     isModuleLoaded = function (name) {
       var e;
       try {
@@ -66,6 +47,8 @@ angular.module('flashular', []).factory('flash', [
     } else {
       eventName = '$locationChangeSuccess';
     }
+    flash = new Flash();
+    flash.now = new Flash();
     $rootScope.$on(eventName, function () {
       flash.now.clear();
       angular.extend(flash.now.data, flash.data);

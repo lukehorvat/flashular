@@ -2,7 +2,7 @@ angular.module("flashular", [])
 
 .factory "flash", ($rootScope) ->
 
-  # Define the flash classes.
+  # Define the flash class.
   class Flash
     constructor: -> @data = {}
     set: (k, v) -> @data[k] = v
@@ -10,13 +10,7 @@ angular.module("flashular", [])
     has: (k) -> k of @data
     remove: (k) -> delete @data[k]
     clear: -> @remove(k) for k of @data
-
-  class NextFlash extends Flash
-    constructor: ->
-      super
-      @now = new Flash
-
-  flash = new NextFlash
+    isEmpty: -> @data.length <= 0
 
   # Determine which event to listen for based on the installed router.
   isModuleLoaded = (name) ->
@@ -30,6 +24,8 @@ angular.module("flashular", [])
     eventName = "$locationChangeSuccess"
 
   # Every route change, make the "next" flash become the "now" flash.
+  flash = new Flash
+  flash.now = new Flash
   $rootScope.$on eventName, ->
     flash.now.clear()
     angular.extend flash.now.data, flash.data
