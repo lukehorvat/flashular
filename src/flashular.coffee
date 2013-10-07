@@ -2,8 +2,28 @@ angular.module("flashular", [])
 
 .factory "flash", ($rootScope) ->
 
-  currentFlash = {}
-  nextFlash = {}
+  # Define the flash classes.
+  class Flash
+    constructor: -> @data = {}
+    set: (k, v) -> @data[k] = v
+    get: (k) -> @data[k]
+    has: (k) -> k of @data
+    remove: (k) -> delete @data[k]
+    clear: -> @remove(k) for k of @data
+
+  class NextFlash extends Flash
+    constructor: (now) ->
+      super
+      @now = now
+    transition: (flash) ->
+      @now.clear()
+      angular.extend @now.data, @data
+      @clear()
+
+  currentFlash = new Flash
+  nextFlash = new NextFlash(currentFlash)
+
+  # Every route change, make the "next" flash become the "now" flash.
   isModuleLoaded = (name) ->
     try angular.module(name)? catch e then false
 
@@ -15,16 +35,9 @@ angular.module("flashular", [])
   else
     eventName = "$locationChangeSuccess"
 
-  $rootScope.$on eventName, ->
-    delete currentFlash[prop] for prop of currentFlash
-    angular.extend currentFlash, nextFlash
-    delete nextFlash[prop] for prop of nextFlash
+  $rootScope.$on eventName, -> nextFlash.transition()
 
-  (k, v) ->
-    if k?
-      if v? then nextFlash[k] = v else nextFlash[k]
-    else
-      currentFlash
+  return nextFlash
 
 .directive "flashAlerts", (flash, $interpolate) ->
 
@@ -35,16 +48,16 @@ angular.module("flashular", [])
   template:
     """
     <div ng-show="flash" class="alerts">
-      <div ng-repeat="alertType in alertTypes" ng-show="flash[alertType]" class="alert alert-{{alertType}}">
+      <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">
         <button type="button" class="close" ng-click="close(alertType)">&times;</button>
-        {{flash[alertType] ? preProcess({alert: flash[alertType]}) : ""}}
+        {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}
       </div>
     </div>
     """
   link: (scope, iElement, iAttrs) ->
-    scope.flash = flash()
+    scope.flash = flash.now
     scope.alertTypes = ["info", "success", "error", "warning"]
-    scope.close = (alertType) -> delete scope.flash[alertType]
+    scope.close = (alertType) -> scope.flash.remove(alertType)
     if not iAttrs.preProcess?
       # Define a default preProcess function that does no processing of the alert.
       scope.preProcess = (alert) -> $interpolate("{{alert}}")(alert)
