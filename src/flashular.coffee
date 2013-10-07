@@ -15,10 +15,6 @@ angular.module("flashular", [])
     constructor: ->
       super
       @now = new Flash
-    transition: ->
-      @now.clear()
-      angular.extend @now.data, @data
-      @clear()
 
   flash = new NextFlash
 
@@ -34,7 +30,10 @@ angular.module("flashular", [])
     eventName = "$locationChangeSuccess"
 
   # Every route change, make the "next" flash become the "now" flash.
-  $rootScope.$on eventName, -> flash.transition()
+  $rootScope.$on eventName, ->
+    flash.now.clear()
+    angular.extend flash.now.data, flash.data
+    flash.clear()
 
   return flash
 

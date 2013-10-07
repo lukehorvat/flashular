@@ -47,11 +47,6 @@ angular.module('flashular', []).factory('flash', [
         NextFlash.__super__.constructor.apply(this, arguments);
         this.now = new Flash();
       }
-      NextFlash.prototype.transition = function () {
-        this.now.clear();
-        angular.extend(this.now.data, this.data);
-        return this.clear();
-      };
       return NextFlash;
     }(Flash);
     flash = new NextFlash();
@@ -72,7 +67,9 @@ angular.module('flashular', []).factory('flash', [
       eventName = '$locationChangeSuccess';
     }
     $rootScope.$on(eventName, function () {
-      return flash.transition();
+      flash.now.clear();
+      angular.extend(flash.now.data, flash.data);
+      return flash.clear();
     });
     return flash;
   }
