@@ -19,7 +19,7 @@ angular.module("app", ["flashular"])
 
 ## Service
 
-Flashular provides a **flash** service that allows you to temporarily store values of *any* type (e.g. strings, arrays, objects, etc.), and retrieve them when the [$location](http://docs.angularjs.org/api/ng.$location) changes. Values are only stored in the flash for a maximum of one $location change before being cleared out.
+Flashular provides a **flash** service that allows you to temporarily store values of *any* type (e.g. strings, arrays, objects, etc.) so that they are available for retrieval when the [$location](http://docs.angularjs.org/api/ng.$location) changes. Values are only stored in the flash for a maximum of one $location change before being cleared out.
 
 To use the flash service, simply inject it as a dependency in your Angular controller:
 
@@ -27,26 +27,39 @@ To use the flash service, simply inject it as a dependency in your Angular contr
 .controller "SignInCtrl", (flash) ->
 ```
 
-The injected flash service is a multi-purpose function that can be called to get/set values in the flash for both the *current* $location and the *next* $location.
-
-To store a value for the next $location, call the function with a key and value pair:
+The injected flash service is simply an object that stores a bunch of key-value pairs intended for the *next* $location. It exposes the following functions you can call to manipulate and query the stored data:
 
 ```coffeescript
-flash("username", "John Smith")
+.get(key) # Returns the value stored in the flash for the specified key.
+.set(key, value) # Stores a value in the flash with the specified key.
+.has(key) # Returns a boolean indicating whether a value is stored in the flash for the specified key.
+.remove(key) # Removes the value stored in the flash with the specified key.
+.clear() # Removes all key-value pairs in the flash.
+.isEmpty() # Returns a boolean indicating whether any key-value pairs are stored in the flash.
 ```
 
-To get a value intended for the next $location, call the function with the value omitted:
+It also has two properties:
 
 ```coffeescript
-flash("username")
+.data # All key-value pairs as stored in their "raw" form. Try not to touch this.
+.now # The flash object intended for the current $location. Has all the same methods above.
 ```
 
-To get/set values in the flash for the current $location, call the function without specifying any arguments. This will return a flash object that you can query however you want:
+As can be seen, the flash stores data for the *next* $location, and its `now` property is itself a flash that contains the data stored for the *current* $location. When the $location changes, the "next" flash becomes the "current" flash. Here's a code example to demonstrate how it all works:
 
 ```coffeescript
-f = flash()
-valueCount = f.length
-username = f["username"]
+# Store a value for the next $location.
+flash.set("username", "John Smith")
+flash.has("username") # Should return true.
+flash.now.has("username") # Should return false.
+flash.get("username") # Should return "John Smith".
+
+# --- $location change occurs.
+
+# Get the value stored for the current $location.
+flash.has("username") # Should return false.
+flash.now.has("username") # Should return true.
+flash.now.get("username") # Should return "John Smith".
 ```
 
 ## Directive
@@ -58,6 +71,8 @@ Adding the flashAlerts directive to a template can be done like so:
 ```
 <flash-alerts></flash-alerts>
 ```
+
+It should be mentioned that this directive uses the flash for the current $location i.e. `flash.now`. So if you store alerts in the flash for the next $location, they will only render once the $location changes. If you want to display an alert *without* waiting for the $location to change, just add values to `flash.now`, of course.
 
 **Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should specify a function that has a single parameter (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
 
