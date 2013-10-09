@@ -72,7 +72,7 @@ Adding the flashAlerts directive to a template can be done like so:
 <flash-alerts></flash-alerts>
 ```
 
-It should be mentioned that this directive utilizes the flash for the current $location i.e. `flash.now`. So if you store alerts in the flash for the next $location, they will only render once the $location actually changes. If you want to immediately display an alert *without* waiting for the $location to change, then just add values to `flash.now`, of course.
+It should be mentioned that this directive utilizes the flash for the *current* $location i.e. `flash.now`. So if you store alerts in the flash for the next $location, they will only render once the $location actually changes. If you want to immediately display an alert *without* waiting for the $location to change, then just add values to `flash.now`, of course.
 
 **Need to do some pre-processing of your alerts before they are rendered?** Just add a `preProcess` attribute, which should specify a function that has a single parameter (the alert stored in the flash, which can be *any* type) and returns the "processed" alert (which should be something renderable, like a string):
 
@@ -93,7 +93,7 @@ Still not clear? Below is an example:
 
 ```coffeescript
 # Store the i18n dictionary key in the flash along with any strings to substitute.
-flash("success", ["SIGN_IN_SUCCESS", username])
+flash.set("success", ["SIGN_IN_SUCCESS", username])
 ```
 
 ```coffeescript
