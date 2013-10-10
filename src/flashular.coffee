@@ -43,7 +43,7 @@ angular.module("flashular", [])
     """
     <div ng-show="flash" class="alerts">
       <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">
-        <button type="button" class="close" ng-click="close(alertType)">&times;</button>
+        <button type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>
         {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}
       </div>
     </div>
@@ -51,7 +51,6 @@ angular.module("flashular", [])
   link: (scope, iElement, iAttrs) ->
     scope.flash = flash.now
     scope.alertTypes = ["info", "success", "error", "warning"]
-    scope.close = (alertType) -> scope.flash.remove(alertType)
     if not iAttrs.preProcess?
       # Define a default preProcess function that does no processing of the alert.
       scope.preProcess = (alert) -> $interpolate("{{alert}}")(alert)

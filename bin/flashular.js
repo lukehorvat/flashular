@@ -64,7 +64,7 @@ angular.module('flashular', []).factory('flash', [
       restrict: 'E',
       replace: true,
       scope: { preProcess: '&' },
-      template: '<div ng-show="flash" class="alerts">\n  <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">\n    <button type="button" class="close" ng-click="close(alertType)">&times;</button>\n    {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}\n  </div>\n</div>',
+      template: '<div ng-show="flash" class="alerts">\n  <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">\n    <button type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>\n    {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}\n  </div>\n</div>',
       link: function (scope, iElement, iAttrs) {
         scope.flash = flash.now;
         scope.alertTypes = [
@@ -73,9 +73,6 @@ angular.module('flashular', []).factory('flash', [
           'error',
           'warning'
         ];
-        scope.close = function (alertType) {
-          return scope.flash.remove(alertType);
-        };
         if (iAttrs.preProcess == null) {
           return scope.preProcess = function (alert) {
             return $interpolate('{{alert}}')(alert);
