@@ -50,7 +50,7 @@ angular.module("flashular", [])
     """
   link: (scope, iElement, iAttrs) ->
     scope.flash = flash.now
-    scope.alertTypes = ["info", "success", "error", "warning"]
+    scope.alertTypes = ["info", "success", "error", "warning", "danger"]
     if not iAttrs.preProcess?
       # Define a default preProcess function that does no processing of the alert.
       scope.preProcess = (alert) -> $interpolate("{{alert}}")(alert)
