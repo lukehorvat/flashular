@@ -71,7 +71,8 @@ angular.module('flashular', []).factory('flash', [
           'info',
           'success',
           'error',
-          'warning'
+          'warning',
+          'danger'
         ];
         if (iAttrs.preProcess == null) {
           return scope.preProcess = function (alert) {
