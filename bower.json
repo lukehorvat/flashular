@@ -12,6 +12,7 @@
     "rails"
   ],
   "license": "MIT",
+  "main": "./bin/flashular.js",
   "ignore": [
     "**/.*",
     "node_modules",
