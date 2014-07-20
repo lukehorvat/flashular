@@ -109,9 +109,9 @@ $rootScope.processFlashAlert = (alert) ->
 
 All contributions are welcome.
 
-As you've probably noticed, Flashular development has been set up to take advantage of [Bower](https://github.com/bower/bower) and [Grunt](https://github.com/gruntjs/grunt). So if you're into that sort of thing, just run `npm install` and `bower install` to get your dependencies sorted out.
+Flashular's development has been set up to take advantage of [bower](http://bower.io/) and [gulp](http://gulpjs.com/). Run `npm install` and `bower install` to get your dependencies sorted out.
 
-Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js) and [flashular.min.js](/bin/flashular.min.js). Run the `grunt watch` task to auto-compile/lint/minify/etc. while you work.
+Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js) and [flashular.min.js](/bin/flashular.min.js). Run the `gulp watch` task to auto-compile/lint/minify/etc. while you work.
 
 ### Development Roadmap
 
