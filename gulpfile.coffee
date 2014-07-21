@@ -1,3 +1,4 @@
+config = require "./gulpconfig"
 gulp = require "gulp"
 coffee = require "gulp-coffee"
 coffeelint = require "gulp-coffeelint"
@@ -7,30 +8,46 @@ rimraf = require "rimraf"
 size = require "gulp-size"
 uglify = require "gulp-uglify"
 watch = require "gulp-watch"
-buildDir = "bin"
-scripts = "src/**/*.coffee"
+{protractor} = require "gulp-protractor"
+http = require "http"
+express = require "express"
+testApp = express().use("/", express.static config.testAppDir).use("/vendor", express.static "bower_components")
+testServer = http.createServer testApp
 
 gulp.task "clean", (done) ->
-  rimraf buildDir, done
+  rimraf config.buildDir, done
 
 gulp.task "build", ["clean"], ->
   gulp
-    .src scripts
+    .src config.script
     .pipe coffeelint
       arrow_spacing: level: "error"
       max_line_length: level: "ignore"
     .pipe coffeelint.reporter()
     .pipe coffee()
     .pipe size showFiles: yes
-    .pipe gulp.dest buildDir
+    .pipe gulp.dest config.buildDir
     .pipe ngAnnotate()
     .pipe uglify mangle: no
     .pipe rename suffix: ".min"
     .pipe size showFiles: yes
-    .pipe gulp.dest buildDir
+    .pipe gulp.dest config.buildDir
 
 gulp.task "watch", ["build"], ->
-  watch glob: scripts, emitOnGlob: no, ["build"]
+  watch glob: config.script, emitOnGlob: no, ["build"]
+
+gulp.task "serve", ["build"], (done) ->
+  testServer.listen config.testServerPort, -> done()
+
+gulp.task "test", ["serve"], ->
+  gulp
+    .src config.testScript, read: no
+    .pipe coffee()
+    .pipe protractor
+      configFile: config.testConfig
+      args: ["--baseUrl", "http://#{testServer.address().address}:#{testServer.address().port}"]
+    .on "error", -> testServer.close()
+    .on "end", -> testServer.close()
 
 gulp.task "default", ->
   # The default task (i.e. "gulp" via the CLI).
