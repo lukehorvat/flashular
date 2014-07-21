@@ -4,7 +4,9 @@ describe "flashular", ->
 
   it "should... work", ->
 
-    browser.get("#/").then ->
-      flash = element(By.id("test-flash"))
-      flash.isDisplayed().then (displayed) -> displayed.should.be.a.Boolean.and.be.true
-      flash.getText().then (text) -> text.should.be.a.String.and.equal "App started!"
+    get = browser.get("#/")
+    flash = element(By.id("test-flash"))
+    displayed = flash.isDisplayed().then (d) -> d.should.be.a.Boolean.and.be.true
+    text = flash.getText().then (t) -> t.should.be.a.String.and.equal "App started!"
+
+    return get.then -> flash.then -> displayed.then -> text
