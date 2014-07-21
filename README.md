@@ -1,4 +1,4 @@
-flashular [![Bower version](https://badge.fury.io/bo/flashular.svg)](https://github.com/lukehorvat/flashular/releases)
+flashular [![Bower version](https://badge.fury.io/bo/flashular.svg)](https://github.com/lukehorvat/flashular/releases) [![Build Status](https://travis-ci.org/lukehorvat/flashular.svg?branch=master)](https://travis-ci.org/lukehorvat/flashular)
 =========
 
 A simple flash service for AngularJS that provides you with the means to pass temporary data between routes (or "states", if using [UI Router](https://github.com/angular-ui/ui-router) terminology). Anything you place in the flash is exposed to the very next route and then immediately cleared out, making it somewhat similar to the [Rails flash](http://api.rubyonrails.org/classes/ActionDispatch/Flash.html). Also comes with a Twitter Bootstrap-compatible directive for displaying flash alerts.
