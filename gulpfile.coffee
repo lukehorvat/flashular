@@ -11,7 +11,10 @@ watch = require "gulp-watch"
 {protractor} = require "gulp-protractor"
 http = require "http"
 express = require "express"
-testApp = express().use("/", express.static config.testAppDir).use("/vendor", express.static "bower_components")
+testApp = express()
+  .use "/#{config.testServerVendorPath}", express.static config.vendorDir
+  .use "/#{config.testServerBuildPath}", express.static config.buildDir
+  .use "/#{config.testServerAppPath}", express.static config.testAppDir
 testServer = http.createServer testApp
 
 gulp.task "clean", (done) ->
@@ -45,7 +48,7 @@ gulp.task "test", ["serve"], ->
     .pipe coffee()
     .pipe protractor
       configFile: config.testConfig
-      args: ["--baseUrl", "http://#{testServer.address().address}:#{testServer.address().port}"]
+      args: ["--baseUrl", "http://#{testServer.address().address}:#{testServer.address().port}/#{config.testServerAppPath}"]
     .on "error", -> testServer.close()
     .on "end", -> testServer.close()
 

@@ -4,7 +4,7 @@ describe "flashular", ->
 
   it "should... work", ->
 
-    browser.get "/"
+    browser.get "#/"
     .then ->
       browser.getTitle()
     .then (title) ->
