@@ -5,7 +5,7 @@ A simple flash service for AngularJS that provides you with the means to pass te
 
 ## Installation
 
-You can manually add the [flashular.js](/bin/flashular.js) file to your AngularJS application, or install it with Bower:
+You can manually add the [flashular.js](/dist/flashular.js) file to your AngularJS application, or install it with Bower:
 
 ```bash
 $ bower install flashular
@@ -111,7 +111,7 @@ All contributions are welcome.
 
 Flashular's development has been set up to take advantage of [bower](http://bower.io/) and [gulp](http://gulpjs.com/). Run `npm install` and `bower install` to get your dependencies sorted out.
 
-Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/bin/flashular.js) and [flashular.min.js](/bin/flashular.min.js). Run the `gulp watch` task to auto-compile/lint/minify/etc. while you work.
+Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/dist/flashular.js) and [flashular.min.js](/dist/flashular.min.js). Run the `gulp watch` task to auto-compile/lint/minify/etc. while you work.
 
 ### Development Roadmap
 
