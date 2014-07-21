@@ -36,14 +36,15 @@ angular.module("flashular", [])
 .directive "flashAlerts", (flash, $interpolate) ->
 
   restrict: "E"
-  replace: true
+  replace: yes
   scope:
+    closeable: "&"
     preProcess: "&"
   template:
     """
     <div ng-show="flash" class="alerts">
       <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">
-        <button type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>
+        <button ng-if="closeable" type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>
         {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}
       </div>
     </div>
@@ -51,6 +52,5 @@ angular.module("flashular", [])
   link: (scope, iElement, iAttrs) ->
     scope.flash = flash.now
     scope.alertTypes = ["info", "success", "error", "warning", "danger"]
-    if not iAttrs.preProcess?
-      # Define a default preProcess function that does no processing of the alert.
-      scope.preProcess = (alert) -> $interpolate("{{alert}}")(alert)
+    scope.closeable = iAttrs.closeable ? no
+    scope.preProcess = iAttrs.preProcess ? (alert) -> $interpolate("{{alert}}")(alert) # Fallback to a default function that does no processing.

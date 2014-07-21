@@ -67,17 +67,18 @@
       restrict: "E",
       replace: true,
       scope: {
+        closeable: "&",
         preProcess: "&"
       },
-      template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash.has(alertType)\" class=\"alert alert-{{alertType}}\">\n    <button type=\"button\" class=\"close\" ng-click=\"flash.remove(alertType)\">&times;</button>\n    {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : \"\"}}\n  </div>\n</div>",
+      template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash.has(alertType)\" class=\"alert alert-{{alertType}}\">\n    <button ng-if=\"closeable\" type=\"button\" class=\"close\" ng-click=\"flash.remove(alertType)\">&times;</button>\n    {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : \"\"}}\n  </div>\n</div>",
       link: function(scope, iElement, iAttrs) {
+        var _ref, _ref1;
         scope.flash = flash.now;
         scope.alertTypes = ["info", "success", "error", "warning", "danger"];
-        if (iAttrs.preProcess == null) {
-          return scope.preProcess = function(alert) {
-            return $interpolate("{{alert}}")(alert);
-          };
-        }
+        scope.closeable = (_ref = iAttrs.closeable) != null ? _ref : false;
+        return scope.preProcess = (_ref1 = iAttrs.preProcess) != null ? _ref1 : function(alert) {
+          return $interpolate("{{alert}}")(alert);
+        };
       }
     };
   });
