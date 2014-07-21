@@ -40,9 +40,9 @@
   "scripts": {
     "precommit": "npm test",
     "prepush": "npm test",
-    "postinstall": "node_modules/.bin/bower install && webdriver-manager update",
-    "start": "node_modules/.bin/gulp watch",
-    "test": "node_modules/.bin/gulp test"
+    "postinstall": "./node_modules/.bin/bower install && webdriver-manager update",
+    "start": "./node_modules/.bin/gulp watch",
+    "test": "./node_modules/.bin/gulp test"
   },
   "keywords": [
     "angular",
