@@ -1,3 +1,5 @@
-angular.module("app", []).run(function($window) {
-  $window.document.title = "Hello";
+angular.module("app", [
+  "flashular"
+]).run(function(flash) {
+  flash.now.set("success", "App started!");
 });
