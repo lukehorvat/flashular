@@ -109,14 +109,13 @@ $rootScope.processFlashAlert = (alert) ->
 
 All contributions are welcome.
 
-Flashular's development has been set up to take advantage of [bower](http://bower.io/) and [gulp](http://gulpjs.com/). Run `npm install` and `bower install` to get your dependencies sorted out.
+Execute `npm install` to sort out your development dependencies, `npm start` to auto-build Flashular while you work, and `npm test` to run the Protractor e2e test suite.
 
-Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/dist/flashular.js) and [flashular.min.js](/dist/flashular.min.js). Run the `gulp watch` task to auto-compile/lint/minify/etc. while you work.
+Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/dist/flashular.js) and [flashular.min.js](/dist/flashular.min.js) scripts.
 
 ### Development Roadmap
 
 Some things to look at doing:
-- A small sample/demo application.
-- Specs.
+- A small sample/demo application on GitHub Pages.
 - Replicate more functionality of the Rails flash.
 - Make the flashAlerts directive more compatible with other front-end frameworks e.g. Foundation.
