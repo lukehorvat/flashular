@@ -37,7 +37,7 @@ gulp.task "build", ["clean"], ->
     .pipe gulp.dest config.buildDir
 
 gulp.task "watch", ["build"], ->
-  watch glob: config.script, emitOnGlob: no, ["build"]
+  watch config.script, -> gulp.start "build"
 
 gulp.task "serve", ["build"], (done) ->
   testServer.listen config.testServerPort, -> done()
