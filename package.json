@@ -1,6 +1,6 @@
 {
   "name": "flashular",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A Rails-inspired flash service for AngularJS.",
   "repository": {
     "type": "git",
