@@ -69,7 +69,7 @@ Flashular also provides a **flashAlerts** directive that allows you to easily di
 Adding the flashAlerts directive to a template can be done like so:
 
 ```
-<flash-alerts></flash-alerts>
+<flash-alerts closeable="true"></flash-alerts>
 ```
 
 It should be mentioned that this directive utilizes the flash for the *current* $location i.e. `flash.now`. So if you store alerts in the flash for the next $location, they will only render once the $location actually changes. If you want to immediately display an alert *without* waiting for the $location to change, then just add values to `flash.now`, of course.
