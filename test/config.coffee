@@ -1,6 +1,6 @@
 module.exports.config =
-  framework: "mocha"
-  mochaOpts:
-    reporter: "spec"
+  framework: "jasmine"
+  jasmineNodeOpts:
+    isVerbose: yes
   capabilities:
     browserName: "phantomjs"

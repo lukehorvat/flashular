@@ -1,4 +1,4 @@
-angular.module("flashular", [])
+angular.module "flashular", []
 
 .factory "flash", ($rootScope) ->
 
