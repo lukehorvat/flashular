@@ -9,7 +9,12 @@
   "keywords": [
     "angular",
     "flash",
-    "rails"
+    "alert",
+    "message",
+    "route",
+    "rails",
+    "service",
+    "directive"
   ],
   "license": "MIT",
   "main": "./dist/flashular.js",
