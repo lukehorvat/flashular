@@ -47,13 +47,16 @@
         return false;
       }
     };
-    if (isModuleLoaded("ngRoute")) {
-      eventName = "$routeChangeSuccess";
-    } else if (isModuleLoaded("ui.router")) {
-      eventName = "$stateChangeSuccess";
-    } else {
-      eventName = "$locationChangeSuccess";
-    }
+    eventName = (function() {
+      switch (false) {
+        case !isModuleLoaded("ngRoute"):
+          return "$routeChangeSuccess";
+        case !isModuleLoaded("ui.router"):
+          return "$stateChangeSuccess";
+        default:
+          return "$locationChangeSuccess";
+      }
+    })();
     flash = new Flash;
     flash.now = new Flash;
     $rootScope.$on(eventName, function() {

@@ -13,15 +13,12 @@ angular.module "flashular", []
     isEmpty: -> @data.length <= 0
 
   # Determine which event to listen for based on the installed router.
-  isModuleLoaded = (name) ->
-    try angular.module(name)? catch e then false
+  isModuleLoaded = (name) -> try angular.module(name)? catch e then false
 
-  if isModuleLoaded "ngRoute"
-    eventName = "$routeChangeSuccess"
-  else if isModuleLoaded "ui.router"
-    eventName = "$stateChangeSuccess"
-  else
-    eventName = "$locationChangeSuccess"
+  eventName = switch
+    when isModuleLoaded("ngRoute") then "$routeChangeSuccess"
+    when isModuleLoaded("ui.router") then "$stateChangeSuccess"
+    else "$locationChangeSuccess"
 
   # Every route change, make the "next" flash become the "now" flash.
   flash = new Flash
