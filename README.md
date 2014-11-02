@@ -112,7 +112,7 @@ All contributions are welcome.
 
 Execute `npm install` to sort out your development dependencies, `npm start` to auto-build Flashular while you work, and `npm test` to run the Protractor e2e test suite.
 
-Make your changes to [flashular.coffee](/src/flashular.coffee), but ensure you also commit the compiled [flashular.js](/dist/flashular.js) and [flashular.min.js](/dist/flashular.min.js) scripts.
+Make your changes to [flashular.coffee](/src/flashular.coffee). Don't commit the transpiled [flashular.js](/dist/flashular.js) and [flashular.min.js](/dist/flashular.min.js) scripts - I always re-generate those myself prior to releasing a new version.
 
 ### Development Roadmap
 
