@@ -1,5 +1,4 @@
-flashular [![Bower version](http://img.shields.io/bower/v/flashular.svg?style=flat-square)](https://github.com/lukehorvat/flashular/releases) [![Build Status](http://img.shields.io/travis/lukehorvat/flashular.svg?style=flat-square)](https://travis-ci.org/lukehorvat/flashular) [![devDependency Status](http://img.shields.io/david/dev/lukehorvat/flashular.svg?style=flat-square)](https://david-dm.org/lukehorvat/flashular#info=devDependencies)
-=========
+# flashular [![Bower version](http://img.shields.io/bower/v/flashular.svg?style=flat-square)](https://github.com/lukehorvat/flashular/releases) [![Build Status](http://img.shields.io/travis/lukehorvat/flashular.svg?style=flat-square)](https://travis-ci.org/lukehorvat/flashular) [![devDependency Status](http://img.shields.io/david/dev/lukehorvat/flashular.svg?style=flat-square)](https://david-dm.org/lukehorvat/flashular#info=devDependencies)
 
 A simple flash service for AngularJS that provides you with the means to pass temporary data between routes (or "states", if using [UI Router](https://github.com/angular-ui/ui-router) terminology). Anything you place in the flash is exposed to the very next route and then immediately cleared out, making it somewhat similar to the [Rails flash](http://api.rubyonrails.org/classes/ActionDispatch/Flash.html). Also comes with a Twitter Bootstrap-compatible directive for displaying flash alerts.
 
@@ -93,15 +92,15 @@ Still not clear? Below is an example:
 
 ```javascript
 // Store the i18n dictionary key in the flash along with any strings to substitute.
-flash.set("success", ["SIGN_IN_SUCCESS", username])
+flash.set("success", ["SIGN_IN_SUCCESS", username]);
 ```
 
-```coffeescript
-# Perform translations and string substituting in the preProcess function.
-# Note: Example function below is written in CoffeeScript.
-$rootScope.processFlashAlert = (alert) ->
-  [message, args...] = alert
-  stringUtils.format(i18n.translate(message), args...)
+```javascript
+// Perform translations and string substituting in the preProcess function.
+$rootScope.processFlashAlert = (alert) => {
+  let [message, ...args] = alert;
+  return stringUtils.format(i18n.translate(message), ...args);
+};
 ```
 
 ![Alert example](http://i.imgur.com/DGZ7sgg.png)
