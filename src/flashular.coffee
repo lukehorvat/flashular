@@ -44,7 +44,7 @@ angular.module "flashular", []
   template:
     """
     <div ng-show="flash" class="alerts">
-      <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertType}}">
+      <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertClass(alertType)}}">
         <button ng-if="closeable" type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>
         {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}
       </div>
