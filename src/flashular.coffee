@@ -27,7 +27,7 @@ angular.module "flashular", []
   flash = new Flash
   flash.now = new Flash
   $rootScope.$on eventName, (event, args) ->
-    unless args.redirectTo? # To preserve flash across redirects
+    unless args.redirectTo? # To preserve flash across redirects.
       flash.now.clear()
       angular.extend flash.now.data, flash.data
       flash.clear()
@@ -55,3 +55,8 @@ angular.module "flashular", []
     scope.alertTypes = ["info", "success", "error", "warning", "danger"]
     scope.closeable = iAttrs.closeable ? no
     scope.preProcess = iAttrs.preProcess ? (alert) -> $interpolate("{{alert}}")(alert) # Fallback to a default function that does no processing.
+
+    alertClassMap = { alert: 'danger', error: 'danger' }
+
+    # Maps alert types to Boostrap alert compatible CSS classes.
+    scope.alertClass = (alertType) -> alertClassMap[alertType] or alertType
