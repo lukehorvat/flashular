@@ -1,3 +1,5 @@
 *.log
 node_modules/
 bower_components/
+# Only because we are using the WebStorm IDE
+/.idea
